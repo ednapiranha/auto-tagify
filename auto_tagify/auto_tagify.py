@@ -23,21 +23,41 @@ class AutoTagify():
         self.css = ''
         self.link = ''
         self.text = ''
-        
+
+    def _tokenize(self):
+        """Tag words from the string."""
+        return nltk.pos_tag(nltk.word_tokenize(self._clean_text()))
+
+    def _cleaned(self, word, strict):
+        lemmatized = self.lemma.lemmatize(self._clean_text(word))
+        if strict:
+            return lemmatized
+        else:
+            return urllib.quote(self._clean_text(word))
+
+    def _clean_text(self, word=''):
+        if len(word) > MIN_TAG_LENGTH:
+            return CLEAN_WORD.sub('', self._replace_special_chars(word.lower()))
+        else:
+            return CLEAN_WORD.sub('', self._replace_special_chars(self.text))
+
+    def _replace_special_chars(self, text):
+        return SMART_QUOTES_S.sub('\'', SMART_QUOTES_D.sub('"', LONG_DASH.sub('-',text)))
+
     def generate(self, strict=True):
         """Return the HTML version of tags for the string."""
-        tag_words = ''
+        tag_words = []
         for (word, word_type) in self._tokenize():
             tag_word = self._cleaned(word, strict)
             if len(tag_word) > MIN_TAG_LENGTH and word_type not in STOP_WORDS:
-                tag_words += '<a href="%s/%s" class="%s">%s</a> ' % (CLEAN_LINK.sub('', self.link),
-                                                                     urllib.quote(tag_word),
-                                                                     CLEAN_WORD.sub('', self.css),
-                                                                     self._replace_special_chars(word))
+                tag_words.append('<a href="%s/%s" class="%s">%s</a> ' % (CLEAN_LINK.sub('', self.link),
+                                                                         urllib.quote(tag_word),
+                                                                         CLEAN_WORD.sub('', self.css),
+                                                                         self._replace_special_chars(word)))
             else:
-                tag_words += word + ' '
-        return tag_words
-    
+                tag_words.append(word + ' ')
+        return ''.join(tag_words)
+
     def tag_list(self, strict=True):
         """Return the tags from string as a list. If strict is set
         to True, then only return the stemmed version. Otherwise, return the
@@ -49,23 +69,3 @@ class AutoTagify():
             if len(tag_word) > MIN_TAG_LENGTH and word_type not in STOP_WORDS:
                 tag_words.append(tag_word)
         return tag_words
-
-    def _tokenize(self):
-        """Tag words from the string."""
-        return nltk.pos_tag(nltk.word_tokenize(self._clean_text()))
-        
-    def _cleaned(self, word, strict):
-        lemmatized = self.lemma.lemmatize(self._clean_text(word))
-        if strict:
-            return lemmatized
-        else:
-            return urllib.quote(self._clean_text(word))
-            
-    def _clean_text(self, word=''):
-        if len(word) > MIN_TAG_LENGTH:
-            return CLEAN_WORD.sub('', self._replace_special_chars(word.lower()))
-        else:
-            return CLEAN_WORD.sub('', self._replace_special_chars(self.text))
-            
-    def _replace_special_chars(self, text):
-        return SMART_QUOTES_S.sub('\'', SMART_QUOTES_D.sub('"', LONG_DASH.sub('-',text)))

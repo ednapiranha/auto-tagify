@@ -10,17 +10,17 @@ from auto_tagify import AutoTagify
 
 t = AutoTagify()
 
-t.text = "This is the text to display!"
+t.text = 'This is the text to display!''
 
-t.link = "/tags"
+t.link = '/tags'
 
-t.css = "tagged"
+t.css = 'tagged'
 
 t.generate()
 
-The result will be: This is the <a href="/tags/text" class="tagged">text</a> to <a href="/tags/display" class="tagged">display!</a>
+The result will be: This is the `<a href="/tags/text" class="tagged">text</a>` to `<a href="/tags/display" class="tagged">display!</a>`
 
-If no link is set, the default path is "/<tagged word>", such as "/text".
+If no link is set, the default path is `/<tagged word>`, such as `/text`.
 
 For the second operation, you will only receive a list of all your taggable words from the text. You can call it like so:
 
