@@ -1,10 +1,10 @@
 from distutils.core import setup
 
 setup(name='auto_tagify',
-      version='1.4',
+      version='1.4.1',
       author='Edna Piranha',
       author_email='jen@ednapiranha.com',
-      url='https://github.com/ednapiranha/auto-tagify',
+      url='https://github.com/operatorjen/auto-tagify',
       description='Auto-tags a selection of text and generates links to the tagified versions of the words',
       license='BSD',
       long_description="""
