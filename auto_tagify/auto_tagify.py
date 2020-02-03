@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
 import re
-import urllib
+try:
+    from urllib import quote
+except ImportError:
+    from urllib.parse import quote
 
 import nltk
 
@@ -33,7 +36,7 @@ class AutoTagify():
         if strict:
             return lemmatized
         else:
-            return urllib.quote(self._clean_text(word))
+            return quote(self._clean_text(word))
 
     def _clean_text(self, word=''):
         if len(word) > MIN_TAG_LENGTH:
@@ -51,7 +54,7 @@ class AutoTagify():
             tag_word = self._cleaned(word, strict)
             if len(tag_word) > MIN_TAG_LENGTH and word_type not in STOP_WORDS:
                 tag_words.append('<a href="%s/%s" class="%s">%s</a> ' % (CLEAN_LINK.sub('', self.link),
-                                                                         urllib.quote(tag_word),
+                                                                         quote(tag_word),
                                                                          CLEAN_WORD.sub('', self.css),
                                                                          self._replace_special_chars(word)))
             else:
