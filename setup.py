@@ -1,15 +1,15 @@
 from distutils.core import setup
 
-setup(name='auto_tagify',
-      version='1.4.1',
-      author='Edna Piranha',
-      author_email='jen@ednapiranha.com',
+setup(name='auto_tagify2',
+      version='1.4.2',
+      author='operatorjen',
+      author_email='python@0112358.io',
       url='https://github.com/operatorjen/auto-tagify',
       description='Auto-tags a selection of text and generates links to the tagified versions of the words',
       license='BSD',
       long_description="""
 
-Auto Tagify is a simple auto tagging module that uses NLTK to generate tags out of a selection of text. Any
+Auto Tagify2 is a simple auto tagging module that uses NLTK to generate tags out of a selection of text. Any
 text that is less than 3 characters long or matches a particular POS (part-of-speech) will be ignored.
 
 There are two operations Auto Tagify performs - one returns the selection of text with links embedded in the
@@ -19,7 +19,7 @@ For the first operation, everything is optional, but it is most effective to ent
 parameters you can set are the paths for tag links and the css classes for link. For instance, if you set
 your tag routing to a relative path such as /tags/<tagged_word> and want to use the css class named "tagged":
 
-from auto_tagify import AutoTagify
+from auto_tagify2 import AutoTagify
 
 t = AutoTagify()
 
@@ -49,7 +49,7 @@ and lemmatization will be ignored.
 
 These two operations are sufficient for you to maintain tag counts and tag references to text in your application.
         """,
-        packages=['auto_tagify'],
+        packages=['auto_tagify2'],
         keywords='tagging tags html nltk english',
         classifiers=[
         'Development Status :: 4 - Beta',
